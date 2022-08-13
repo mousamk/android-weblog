@@ -2,8 +2,9 @@ package com.parinaz.weblog
 
 import java.io.Serializable
 
-data class Post (
+data class Comment (
     val id: Long,
-    val title: String,
-    val body: String,
+    val text: String,
+    val name: String,
+    val postId: Long
     ) : Serializable
