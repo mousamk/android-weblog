@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity"
+    android:id="@+id/parent"
+    android:background="@drawable/bg_post_item"
+    android:layout_marginBottom="5dp"
+    android:padding="5dp">
+
+
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/comment_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        tools:text="mfnvefnhvjkefnvjefnvhi mjmj mjkm jm j mjk mjmj mj mmkm n j umjm j mjm jm jm kmki ki mikm ikm ikm ikm ikm kim ik mki mik mki ik mik mikm kimikm ik mikm ik mkim kim ik kim ikm ki mik mkim ki mkim kmkmk mkim ikkm ik mkki mk immikm ikm mikm kim kim ikm ik mki mik mikm ikkmki mi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/parent"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/comment_name"
+        tools:text="mousa"
+        app:layout_constraintTop_toBottomOf="@id/comment_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:layout_marginTop="5dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

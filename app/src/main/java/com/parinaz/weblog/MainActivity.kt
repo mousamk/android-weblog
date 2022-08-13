@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val postClickListener = object: OnPostClickListener {
             override fun onClick(post: Post){
                 val intent = Intent(this@MainActivity, PostIndividualActivity::class.java)
-                intent.putExtra("arg.post",post)
+                intent.putExtra(PostIndividualActivity.ARG_POST,post)
                 startActivity(intent)
 
 //                Toast.makeText(this@MainActivity, "it has been clicked on ${post.title} !", Toast.LENGTH_SHORT).show()
