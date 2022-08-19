@@ -31,9 +31,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val adapter = PostAdapter(this, postRepository.getPost(),postClickListener)
-        recyclerView.adapter = adapter
 
+        postRepository.getPost { posts ->
+            val adapter = PostAdapter(this, posts, postClickListener)
+            recyclerView.adapter = adapter
+        }
     }
 
     interface OnPostClickListener {

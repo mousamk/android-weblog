@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class Comment (
     val id: Long,
-    val text: String,
+    val body: String,
     val name: String,
     val postId: Long
     ) : Serializable
