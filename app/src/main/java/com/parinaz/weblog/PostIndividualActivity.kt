@@ -29,11 +29,11 @@ class PostIndividualActivity : AppCompatActivity() {
             postRepository.getComments( { comments ->
                 val adapter = CommentAdapter(this, comments,)
                 recyclerView.adapter = adapter
+                progressBar.visibility = View.GONE
             },{ message ->
                 Toast.makeText(this, "An error has been occurred: ${message.orEmpty()}", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.GONE
               }, post.id)
-
-            progressBar.visibility = View.GONE
 
             binding.postTitleIndividual.text = post.title
             binding.postBodyIndividual.text = post.body

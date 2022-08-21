@@ -35,10 +35,11 @@ class MainActivity : AppCompatActivity() {
         postRepository.getPost({ posts ->
             val adapter = PostAdapter(this, posts, postClickListener)
             recyclerView.adapter = adapter
+            progressBar.visibility = View.GONE
         }, { message ->
             Toast.makeText(this, "An error has been occurred: ${message.orEmpty()}", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.GONE
         })
-        progressBar.visibility = View.GONE
     }
 
     interface OnPostClickListener {
