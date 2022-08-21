@@ -2,6 +2,9 @@ package com.parinaz.weblog
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.parinaz.weblog.adapter.CommentAdapter
 import com.parinaz.weblog.adapter.PostAdapter
@@ -17,7 +20,7 @@ class PostIndividualActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val postRepository = PostRepository()
-
+        val progressBar: ProgressBar = binding.progressbar
 
         val post = intent.getSerializableExtra(ARG_POST) as? Post
         if (post != null) {
@@ -26,7 +29,11 @@ class PostIndividualActivity : AppCompatActivity() {
             postRepository.getComments( { comments ->
                 val adapter = CommentAdapter(this, comments,)
                 recyclerView.adapter = adapter
-            }, post.id)
+            },{ message ->
+                Toast.makeText(this, "An error has been occurred: ${message.orEmpty()}", Toast.LENGTH_SHORT).show()
+              }, post.id)
+
+            progressBar.visibility = View.GONE
 
             binding.postTitleIndividual.text = post.title
             binding.postBodyIndividual.text = post.body
