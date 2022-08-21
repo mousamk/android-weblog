@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.parinaz.weblog.adapter.PostAdapter
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = binding.recyclerView
         val postRepository = PostRepository()
-
+        val progressBar: ProgressBar = binding.progressbar
 
         val postClickListener = object: OnPostClickListener {
             override fun onClick(post: Post){
@@ -31,9 +32,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val adapter = PostAdapter(this, postRepository.getPost(),postClickListener)
-        recyclerView.adapter = adapter
-
+        postRepository.getPost({ posts ->
+            val adapter = PostAdapter(this, posts, postClickListener)
+            recyclerView.adapter = adapter
+            progressBar.visibility = View.GONE
+        }, { message ->
+            Toast.makeText(this, "An error has been occurred: ${message.orEmpty()}", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.GONE
+        })
     }
 
     interface OnPostClickListener {

@@ -20,7 +20,7 @@ class CommentAdapter (private val context: Context,
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val comment = dataset[position]
-        holder.binding.commentText.text = comment.text
+        holder.binding.commentText.text = comment.body
         holder.binding.commentName.text = comment.name
     }
 

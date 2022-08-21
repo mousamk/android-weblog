@@ -26,6 +26,18 @@
         android:textSize="15sp"
         />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressbar"
+        android:progress="10"
+        style="@style/Animation.Design.BottomSheetDialog"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/post_body_individual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comments_recyclerview"
         android:layout_width="match_parent"
