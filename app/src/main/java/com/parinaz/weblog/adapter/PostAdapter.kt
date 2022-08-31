@@ -40,14 +40,11 @@ class PostAdapter(
         val binding = ListItemBinding.bind(itemView)
         lateinit var post: Post
 
-
         init {
             binding.root.setOnClickListener {
                 clickListener.onClick(post)
             }
 
         }
-
-
     }
 }
