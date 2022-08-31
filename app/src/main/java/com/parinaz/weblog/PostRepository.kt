@@ -8,13 +8,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PostRepository {
+object PostRepository {
 
-    fun getPost(callBack: (List<Post>)-> Unit, errorCallBack: (String?)-> Unit) {
+    private val savedPosts : MutableList<Post> = mutableListOf()
+
+    fun loadPosts(callBack: (List<Post>)-> Unit, errorCallBack: (String?)-> Unit) {
         val call = WeblogApi.retrofitService.getPosts()
         call.enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 val posts = response.body().orEmpty()
+                savedPosts.clear()
+                savedPosts.addAll(posts)
                 callBack(posts)
             }
 
@@ -22,9 +26,10 @@ class PostRepository {
                 t.printStackTrace()
                 errorCallBack(t.message)
             }
-
         })
     }
+
+    fun getPosts (): List<Post> = savedPosts
 
     fun getComments(callBack: (List<Comment>) -> Unit, errorCallBack: (String?) -> Unit, postId: Long){
         val call = WeblogApi.retrofitService.getComments(postId)
