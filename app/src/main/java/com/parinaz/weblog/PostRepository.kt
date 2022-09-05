@@ -8,18 +8,29 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-object PostRepository {
+import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
-    private val savedPosts : MutableList<Post> = mutableListOf()
+
+class PostRepository private constructor(private val appContext: Context){
+
+    //private val savedPosts : MutableList<Post> = mutableListOf()
 
     fun loadPosts(callBack: (List<Post>)-> Unit, errorCallBack: (String?)-> Unit) {
         val call = WeblogApi.retrofitService.getPosts()
         call.enqueue(object: Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 val posts = response.body().orEmpty()
-                savedPosts.clear()
-                savedPosts.addAll(posts)
+                //savedPosts.clear()
+                //savedPosts.addAll(posts)
                 callBack(posts)
+
+                val gson = Gson()
+                val myString = gson.toJson(posts)
+                val pref: SharedPreferences = appContext.getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+                pref.edit().putString("posts", myString).apply()
+
             }
 
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
@@ -29,7 +40,14 @@ object PostRepository {
         })
     }
 
-    fun getPosts (): List<Post> = savedPosts
+    fun getPosts (): List<Post> {
+        //return savedPosts
+        val pref: SharedPreferences = appContext.getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+        val myPosts = pref.getString("posts", "")
+        val gson = Gson()
+        return gson.fromJson<List<Post>>(myPosts, object : TypeToken<ArrayList<Post>>() {}.type).orEmpty()
+
+    }
 
     fun getComments(callBack: (List<Comment>) -> Unit, errorCallBack: (String?) -> Unit, postId: Long){
         val call = WeblogApi.retrofitService.getComments(postId)
@@ -44,5 +62,14 @@ object PostRepository {
                 errorCallBack(t.message)
             }
         })
+    }
+
+    companion object {
+        private var instance : PostRepository? = null
+
+        fun getInstance(appContext: Context): PostRepository {
+            instance?.let { return it }
+            return PostRepository(appContext).apply { instance = this }
+        }
     }
 }
