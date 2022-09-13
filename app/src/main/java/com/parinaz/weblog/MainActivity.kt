@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        val posts = PostRepository.getPosts()
+        val posts = PostRepository.getInstance(applicationContext).getPosts()
         val adapter = PostAdapter(this, posts , postClickListener)
         recyclerView.adapter = adapter
     }

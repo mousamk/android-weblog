@@ -20,14 +20,26 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val textSplash : TextView = binding.textSplash
-        val postRepository = PostRepository
+        val postRepository = PostRepository.getInstance(applicationContext)
 
-        postRepository.loadPosts({ posts ->
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }, { message ->
-            Toast.makeText(this, "An error has been occurred: ${message.orEmpty()}", Toast.LENGTH_SHORT).show()
-        })
+        if (postRepository.getPosts().isEmpty()) {
+            postRepository.loadPosts({ posts ->
+                goToMain()
+            }, { message ->
+                Toast.makeText(
+                    this,
+                    "An error has been occurred: ${message.orEmpty()}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
+        } else {
+            goToMain()
+        }
+    }
+
+    private fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

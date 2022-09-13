@@ -19,7 +19,7 @@ class PostIndividualActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val postRepository = PostRepository
+        val postRepository = PostRepository.getInstance(applicationContext)
         val progressBar: ProgressBar = binding.progressbar
 
         val post = intent.getSerializableExtra(ARG_POST) as? Post
